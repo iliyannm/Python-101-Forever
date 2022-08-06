@@ -77,75 +77,29 @@ def down_vertical(mat, word, letter, row, col):
 def word_counter(matrix, word):
     initial_letter = word[0]
     counter = 0
-    found_indexes = []
 
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
             if matrix[i][j] == initial_letter:
-
                 if left_down_diagonal(matrix, word, initial_letter, i, j):
                     counter += 1
-                    found_indexes.append([(i, j), (i + (len(word) - 1), j - (len(word) - 1))])
-                    for pair in found_indexes:
-                        if pair[0] == (i + (len(word) - 1), j - (len(word) - 1)):
-                            found_indexes.pop()
-                            counter -= 1
-
                 if left_horizontal(matrix, word, initial_letter, i, j):
                     counter += 1
-                    found_indexes.append([(i, j), (i, j - (len(word) - 1))])
-                    for pair in found_indexes:
-                        if pair[0] == (i, j - (len(word) - 1)):
-                            found_indexes.pop()
-                            counter -= 1
-
                 if left_up_diagonal(matrix, word, initial_letter, i, j):
                     counter += 1
-                    found_indexes.append([(i, j), (i - (len(word) - 1), j - (len(word) - 1))])
-                    for pair in found_indexes:
-                        if pair[0] == (i - (len(word) - 1), j - (len(word) - 1)):
-                            found_indexes.pop()
-                            counter -= 1
-
                 if upper_vertical(matrix, word, initial_letter, i, j):
                     counter += 1
-                    found_indexes.append([(i, j), (i - (len(word) - 1), j)])
-                    for pair in found_indexes:
-                        if pair[0] == (i - (len(word) - 1), j):
-                            found_indexes.pop()
-                            counter -= 1
-
                 if right_up_diagonal(matrix, word, initial_letter, i, j):
                     counter += 1
-                    found_indexes.append([(i, j), (i - (len(word) - 1), j + (len(word) - 1))])
-                    for pair in found_indexes:
-                        if pair[0] == (i - (len(word) - 1), j + (len(word) - 1)):
-                            found_indexes.pop()
-                            counter -= 1
-
                 if right_horizontal(matrix, word, initial_letter, i, j):
                     counter += 1
-                    found_indexes.append([(i, j), (i, j + (len(word) - 1))])
-                    for pair in found_indexes:
-                        if pair[0] == (i, j + (len(word) - 1)):
-                            found_indexes.pop()
-                            counter -= 1
-
                 if right_down_horizontal(matrix, word, initial_letter, i, j):
                     counter += 1
-                    found_indexes.append([(i, j), (i + (len(word) - 1), j + (len(word) - 1))])
-                    for pair in found_indexes:
-                        if pair[0] == (i + (len(word) - 1), j + (len(word) - 1)):
-                            found_indexes.pop()
-                            counter -= 1
-
                 if down_vertical(matrix, word, initial_letter, i, j):
                     counter += 1
-                    found_indexes.append([(i, j), (i + (len(word) - 1), j)])
-                    for pair in found_indexes:
-                        if pair[0] == (i + (len(word) - 1), j):
-                            found_indexes.pop()
-                            counter -= 1
+
+    if word == word[::-1]:
+        counter /= 2
 
     return counter
 
