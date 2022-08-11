@@ -8,11 +8,11 @@ class Fraction:
 
         If denominator = 0, raise ValueError.
         """
-        self.denominator = denominator
         self.numerator = numerator
+        self.denominator = denominator
 
         if self.denominator == 0:
-            raise ValueError('Denominator cannot be 0')
+            raise ValueError('Denominator can not be 0')
 
     def __str__(self):
         """
@@ -32,11 +32,10 @@ class Fraction:
 
     def __eq__(self, other):
         """
-        Returns True/False, if self is equal to the other one.
+        Returns True/False, if _self is equal to _other.
         """
-
         if not isinstance(other, Fraction):
-            raise TypeError(f'Fraction is not equal to {other}')
+            raise TypeError(f"{other} is not equal to Fracion")
 
         self_gcd = gcd(self.numerator, self.denominator)
         other_gcd = gcd(other.numerator, other.denominator)
@@ -50,45 +49,58 @@ class Fraction:
         Returns new Fraction, that's the sum of self and other.
         """
         if not isinstance(other, Fraction):
-            raise TypeError(f'Fraction is not equal to {other}')
+            raise TypeError(f"{other} is not equal to Fracion")
 
         self_lcm = lcm(self.denominator, other.denominator) // self.denominator
         other_lcm = lcm(self.denominator, other.denominator) // other.denominator
 
-        return Fraction(self.numerator * self_lcm + other.numerator * other_lcm,
-                        lcm(self.denominator, other.denominator))
+        return Fraction(
+            self.numerator * self_lcm + other.numerator * other_lcm,
+            lcm(self.denominator, other.denominator)
+        )
 
     def __sub__(self, other):
         """
         Returns new Fraction, that's the substraction of self and other.
         """
         if not isinstance(other, Fraction):
-            raise TypeError(f'Fraction is not equal to {other}')
+            raise TypeError(f"{other} is not equal to Fracion")
 
         self_lcm = lcm(self.denominator, other.denominator) // self.denominator
         other_lcm = lcm(self.denominator, other.denominator) // other.denominator
 
-        return Fraction(self.numerator * self_lcm - other.numerator * other_lcm,
-                        lcm(self.denominator, other.denominator))
+        return Fraction(
+            self.numerator * self_lcm - other.numerator * other_lcm,
+            lcm(self.denominator, other.denominator)
+        )
 
     def __mul__(self, other):
         """
         Returns new Fraction, that's the product of self and other.
         """
         if not isinstance(other, Fraction):
-            raise TypeError(f'Fraction is not equal to {other}')
+            raise TypeError(f"{other} is not equal to Fracion")
 
-        return Fraction(self.numerator * other.numerator, self.denominator * other.denominator)
+        return Fraction(
+            self.numerator * other.numerator,
+            self.denominator * other.denominator
+        )
+
+    def __lt__(self, other):
+        if not isinstance(other, Fraction):
+            raise TypeError(f"{other} is not equal to Fracion")
+
+        self_lcm = lcm(self.denominator, other.denominator) // self.denominator
+        other_lcm = lcm(self.denominator, other.denominator) // other.denominator
+
+        return self_lcm * self.numerator < other_lcm * other.numerator
 
     def simplify(self):
         """
         Returns new Fraction, that's the simplification of self
         """
         if self.numerator == 0:
-            return Fraction(
-                self.numerator,
-                self.denominator
-            )
+            return Fraction(self.numerator, self.denominator)
 
         self_gcd = gcd(self.numerator, self.denominator)
 
@@ -101,5 +113,4 @@ class Fraction:
         """
         Returns True/False, if self cannot be simplified further
         """
-
         return self.numerator == 0 or gcd(self.numerator, self.denominator) == 1
