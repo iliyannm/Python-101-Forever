@@ -62,18 +62,44 @@ class Fraction:
         """
         Returns new Fraction, that's the substraction of self and other.
         """
+        if not isinstance(other, Fraction):
+            raise TypeError(f'Fraction is not equal to {other}')
+
+        self_lcm = lcm(self.denominator, other.denominator) // self.denominator
+        other_lcm = lcm(self.denominator, other.denominator) // other.denominator
+
+        return Fraction(self.numerator * self_lcm - other.numerator * other_lcm,
+                        lcm(self.denominator, other.denominator))
 
     def __mul__(self, other):
         """
         Returns new Fraction, that's the product of self and other.
         """
+        if not isinstance(other, Fraction):
+            raise TypeError(f'Fraction is not equal to {other}')
+
+        return Fraction(self.numerator * other.numerator, self.denominator * other.denominator)
 
     def simplify(self):
         """
         Returns new Fraction, that's the simplification of self
         """
+        if self.numerator == 0:
+            return Fraction(
+                self.numerator,
+                self.denominator
+            )
+
+        self_gcd = gcd(self.numerator, self.denominator)
+
+        return Fraction(
+            self.numerator // self_gcd,
+            self.denominator // self_gcd
+        )
 
     def is_simplified(self):
         """
         Returns True/False, if self cannot be simplified further
         """
+
+        return self.numerator == 0 or gcd(self.numerator, self.denominator) == 1
